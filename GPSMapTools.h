@@ -59,6 +59,7 @@ class GPSMapTools
   ArFunctorC<GPSMapTools> myStartObstacleLineCB;
   ArFunctorC<GPSMapTools> myEndObstacleLineCB;
   ArFunctorC<GPSMapTools> myReloadMapFileCB;
+  ArFunctorC<GPSMapTools> myResetRobotPoseCB;
   ArServerHandlerMap *myMapServer;
 
   ArPose getCurrentPosFromGPS();
@@ -67,6 +68,7 @@ class GPSMapTools
   void startNewMap(ArArgumentBuilder *args);
   void addGoalHere(ArArgumentBuilder *args);
   void addHomeHere(ArArgumentBuilder *args);
+  void resetRobotPose();
   void setOrigin();
   void startForbiddenLine();
   void endForbiddenLine();
