@@ -56,7 +56,7 @@ AREXPORT GPSMapTools::GPSMapTools(ArGPS *gps, ArRobot* robot, ArServerHandlerCom
 //  commandServer->addCommand("Map:obstacleLineStart", "Begin a new obstacle line", &myStartObstacleLineCB);
 //  commandServer->addCommand("Map:obstacleLineEnd", "End a obstacle line that was started with obstacleLineStart", &myEndObstacleLineCB);
   commandServer->addCommand("Map:reloadFile", "Reload map from its file on the robot", &myReloadMapFileCB);
-  commmandServer->addCommand("ResetRobotPose", "Reset robot pose to 0,0,0", &myResetRobotPoseCB);
+  commandServer->addCommand("ResetRobotPose", "Reset robot pose to 0,0,0", &myResetRobotPoseCB);
 }
 
 bool GPSMapTools::checkGPS(const std::string &action)
@@ -123,12 +123,12 @@ void GPSMapTools::resetRobotPose()
   {
     ArLog::log(ArLog::Normal, "GPSMapTools: Resetting robot odometric position to 0,0,0.");
     myRobot->moveTo(0,0,0);
-    myRobot->com(ArCommands:SETO);
+    myRobot->com(ArCommands::SETO);
     myRobot->com(ArCommands::SIM_RESET);
   }
   else
   {
-    ArLog::Log(ArLog::Normal, "GPSMapTools: Can't reset robot pose, have no robot pointer!");
+    ArLog::log(ArLog::Normal, "GPSMapTools: Can't reset robot pose, have no robot pointer!");
   }
 }
 
@@ -137,7 +137,6 @@ void GPSMapTools::setOrigin()
   if(!checkGPS("setting map origin")) return;
   if(!checkMap("setting map origin")) return;
   resetRobotPose();
-  }
   if(myMap->hasOriginLatLongAlt())
   {
     ArLog::log(ArLog::Terse, "GPSMapTools: setting map origin: Warning: Map already has an origin point, it will be replaced by current position.");

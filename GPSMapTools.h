@@ -68,7 +68,6 @@ class GPSMapTools
   void startNewMap(ArArgumentBuilder *args);
   void addGoalHere(ArArgumentBuilder *args);
   void addHomeHere(ArArgumentBuilder *args);
-  void resetRobotPose();
   void setOrigin();
   void startForbiddenLine();
   void endForbiddenLine();
@@ -76,6 +75,7 @@ class GPSMapTools
   void endObstacleLine();
   void reloadMapFile();
   void resetMapCoords(const ArLLACoords& mapOrigin);
+  void resetRobotPose();
 public:
   /** Adds custom commands to @a commandServer to drop goals at GPS position, ... 
    */
