@@ -33,6 +33,8 @@ Amherst, NH 03031
 #include "ArGPSCoords.h"
 #include "ArNetworking.h"
 
+class ArServerHandlerLocalization;
+
 /** Manages user "custom" commands that assist in map-making based on surveying
  * with the robot's GPS receiver.
  */
@@ -53,14 +55,16 @@ class GPSMapTools
   ArFunctor1C<GPSMapTools, ArArgumentBuilder*> myStartNewMapCB;
   ArFunctor1C<GPSMapTools, ArArgumentBuilder*> myAddGoalHereCB;
   ArFunctor1C<GPSMapTools, ArArgumentBuilder*> myAddHomeHereCB;
-  ArFunctorC<GPSMapTools> mySetOriginCB;
+  ArFunctorC<GPSMapTools> mySetMapOriginLLAFromGPSCB;
   ArFunctorC<GPSMapTools> myStartForbiddenLineCB;
   ArFunctorC<GPSMapTools> myEndForbiddenLineCB;
   ArFunctorC<GPSMapTools> myStartObstacleLineCB;
   ArFunctorC<GPSMapTools> myEndObstacleLineCB;
   ArFunctorC<GPSMapTools> myReloadMapFileCB;
   ArFunctorC<GPSMapTools> myResetRobotPoseCB;
+  ArFunctorC<GPSMapTools> myResetMapOriginHereCB;
   ArServerHandlerMap *myMapServer;
+  ArServerHandlerLocalization *myLocalizationServer;
 
   ArPose getCurrentPosFromGPS();
   bool checkGPS(const std::string &action);
@@ -68,7 +72,8 @@ class GPSMapTools
   void startNewMap(ArArgumentBuilder *args);
   void addGoalHere(ArArgumentBuilder *args);
   void addHomeHere(ArArgumentBuilder *args);
-  void setOrigin();
+  void resetMapOriginHere();
+  void setMapOriginLLAFromGPS();
   void startForbiddenLine();
   void endForbiddenLine();
   void startObstacleLine();
@@ -79,7 +84,9 @@ class GPSMapTools
 public:
   /** Adds custom commands to @a commandServer to drop goals at GPS position, ... 
    */
-  AREXPORT GPSMapTools(ArGPS *gps, ArRobot *robot, ArServerHandlerCommands *commandServer, ArMap *map, ArServerHandlerMap *mapserver, ArServerHandlerPopup *popupServer = NULL);
+  AREXPORT GPSMapTools(ArGPS *gps, ArRobot *robot, 
+    ArServerHandlerCommands *commandServer, ArMap *map, ArServerHandlerMap *mapserver,
+    ArServerHandlerLocalization * = 0, ArServerHandlerPopup *popupServer = 0);
 };
 
 #endif
